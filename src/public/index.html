@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">    
+        <!-- Incluir archivo CSS de Bootstrap -->
+        <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/icons/bootstrap-icons.css">
+        <link rel="stylesheet" href="/style/style.css">
+        <link rel="icon" type="image/png" href="./img/hdd-network-fill.svg"/>
+        
+        <title>Trasmisión de datos</title>
+    </head>
+    <body class="bg-dark text-ligth">
+        <main>
+            <header class="container">
+                <nav class="row w-100 p-3">
+                    <ul class="list-group list-group-horizontal-sm">
+                        <li data-status class="list-group-item list-group-item-dark text-danger text-break"><i data-status-text class="bi bi-ethernet">Desconectado</i></li>
+                        <li class="list-group-item list-group-item-dark text-break"><i data-rol class="bi bi-person-fill"></i></li>
+                        <li class="list-group-item list-group-item-dark text-break"><i data-ip class="bi bi-pc-display"></i></li>
+                        <li class="list-group-item list-group-item-dark text-break"><i data-port class="bi bi-hdd-stack-fill"></i></li>
+                    </ul>
+                </nav>
+            </header>
+            <section class="container">
+                <div class=" grid gap-3 row w-100">
+                    <div class="bg-secondary card col-sm"> 
+                        <h2 >Enviar un mensaje...</h2>
+                        <div class="form-floating">
+                            <ul data-register-send class="list-group list-group-flush rounded"></ul>
+                            <input type="text" id="inputMensaje" data-message class="form-control mb-3"></input>
+                        </div>
+                        <div class="col-2-sm d-md-flex justify-content-md-end">
+                            <button 
+                                type="button" 
+                                data-btn-send 
+                                class="btn btn-success w-25-sm mb-3 me-2"
+                            >
+                                <i class="bi bi-send-fill">Enviar</i>
+                            </button>
+                            <button 
+                                type="button" 
+                                data-btn-reset 
+                                class="btn btn-danger w-25-sm mb-3"
+                            >
+                                <i class="bi bi-x">Borrar</i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="bg-secondary card col-sm">
+                        <h2>Mensajes recibidos...</h2>
+                        <div disable  class="form-floating">
+                            <ul data-register-message class="list-group list-group-flush rounded"></ul>
+                        </div>
+                        <button 
+                            data-btn-reset-register-message
+                            hidden 
+                            type="button" 
+                            class="btn btn-danger mb-3"
+                        >
+                            <i class="bi bi-x">Borrar</i>
+                        </button>
+                    </div>
+                </div>
+            </section>
+            <script src="/socket.io/socket.io.min.js"></script>
+            <script src="./app/app.js"></script>
+        </main>
+    </body>
+</html>
