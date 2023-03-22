@@ -3,17 +3,15 @@ import  {Server as WebSocketServer}  from "socket.io";
 import http from "http";
 import {fileURLToPath} from "url";
 import path from "path";
-import {status} from "./admIP.js";
+import {ethernetIP,ethernet2IP} from "./admIP.js";
 import readline from "readline";
-import { Socket } from "dgram";
 const rl = readline.createInterface({
 	input: process.stdin,
 	output: process.stdout,
 });
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-
 //Configucion del servidor
-const SERVER = status()||'127.0.0.1';
+const SERVER = ethernetIP() || ethernet2IP();
 const PORT = 3000;
 const app = express();
 const httpSer = http.createServer(app);//Instancia http para socket.io con express
