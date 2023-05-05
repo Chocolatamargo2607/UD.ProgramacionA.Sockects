@@ -23,7 +23,11 @@ export function ethernetIP(){
 };
 export function ethernet2IP(){
 	const interfaces = os.networkInterfaces()
-	const ethInterfaces2 = interfaces.wlan0 || interfaces['Ethernet 2'];//Dependiendo de que sistema operativo se este usando
+	const ethInterfaces2 =
+		interfaces.wlan0 ||
+		interfaces["Ethernet"] ||
+		interfaces["Wi-Fi"] ||
+		interfaces["Ethernet 3"];//Dependiendo de que sistema operativo se este usando
 	if(ethInterfaces2){
 		const activeInterface2 = ethInterfaces2.find(//find buscara en la array ifaces, la interfaz que cumpla con las condiciones
 			(iface) =>
