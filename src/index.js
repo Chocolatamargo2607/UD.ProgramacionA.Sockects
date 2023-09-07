@@ -10,43 +10,49 @@ const rl = readline.createInterface({
 	output: process.stdout,
 });
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-//Configucion del servidor
+
+//Configución del servidor
 const SERVER = ethernetIP() || ethernet2IP();
 const PORT = 3000;
 const app = express();
 const httpSer = http.createServer(app);//Instancia http para socket.io con express
-const io = new WebSocketServer(httpSer);//Instancia de socket.io, la conn con el servidor
+const io = new WebSocketServer(httpSer);//Instancia de socket.io, con el servidor
 const sockets = [];//Array de sockets
-//Coneccion con el cliente
+
+//Conección con el cliente
 io.on("connection", (socket) => {
 	console.log(`Socket conectado: ${socket.handshake.address}`);
+	socket.on("name",data=>{
+		console.log(data)
+	    let index = sockets.findIndex((s) => s.socket.handshake.address === socket.handshake.address );
+		var newObject = sockets[index]
+		newObject.nombre = data
+		sockets[index] = newObject
+		updateData(socket,data)
+	})
 
-	let index = sockets.findIndex((s) => s.handshake.address === socket.handshake.address );
+	let index = sockets.findIndex((s) => s.socket.handshake.address === socket.handshake.address );
 
-	if (index === -1) {sockets.push(socket);} 
-	else {sockets[index] = socket;}
+	if (index === -1) {sockets.push({socket,nombre :null});} 
+	else {sockets[index] = {socket,nombre:null};}
 
 	//Detecta un socket conectado al servidor y emite una respuesta imediata
-	socket.emit("socketData", {
-		ip: socket.handshake.address,
-		port: PORT,
-		rol: socket.handshake.address == SERVER ? "Servidor" : "Cliente", //Definiendo rol del socket entrante
-	});
+	function updateData(socket,data){
+		socket.emit("socketData", {
+			ip: socket.handshake.address,
+			port: PORT,
+			rol: socket.handshake.address == SERVER ? "Servidor" : "Cliente", //Definiendo rol del socket entrante
+			nombre: data
+		});
+	}
+	
 
 	socket.on("message", (data) => {
-		let servidor = sockets.find((s) => s.handshake.address == SERVER);
-		if(socket.handshake.address == SERVER){
+		let servidor = sockets.find((s) => s.socket.handshake.address == SERVER);
 			sockets.forEach((c) => {
-				if(c.handshake.address != SERVER){
-					c.emit("messageServer",data.message);
-					console.log(`Mensaje Enviado a: `,c.handshake.address)
-				}
+					c.socket.emit("messageServer",data.message);
+					console.log(`Mensaje Enviado a: `,c.socket.handshake.address)
 			});
-		}else{
-			console.log(`Mensaje en buzon\n${data.message}`);
-			servidor.handshake.address?servidor.emit("messageServer",data.message):console.log('Servidor no encontrado');
-			console.log(`Mensaje Enviado a: `,servidor.handshake.address)
-		}
 	});
 
 	//Metodo enviar mensaje por consola

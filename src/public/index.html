@@ -1,3 +1,5 @@
+ <!-- Parte fronent, utilizando una plantilla de bootstrap -->
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -9,10 +11,11 @@
         <link rel="stylesheet" href="/style/style.css">
         <link rel="icon" type="image/png" href="./img/hdd-network-fill.svg"/>
         
-        <title>Trasmisión de datos</title>
+        <title>Chat Servidor-Cliente</title>
     </head>
-    <body class="bg-dark text-ligth">
+    <body class="bg-dark text-light">
         <main>
+            
             <header class="container">
                 <nav class="row w-100 p-3">
                     <ul class="list-group list-group-horizontal-sm">
@@ -20,6 +23,7 @@
                         <li class="list-group-item list-group-item-dark text-break"><i data-rol class="bi bi-person-fill"></i></li>
                         <li class="list-group-item list-group-item-dark text-break"><i data-ip class="bi bi-pc-display"></i></li>
                         <li class="list-group-item list-group-item-dark text-break"><i data-port class="bi bi-hdd-stack-fill"></i></li>
+                        <li class="list-group-item list-group-item-dark text-break"><i data-name class="bi bi-hdd-stack-fill"></i></li>
                     </ul>
                 </nav>
             </header>
@@ -64,8 +68,34 @@
                     </div>
                 </div>
             </section>
-            <script src="/socket.io/socket.io.min.js"></script>
-            <script src="./app/app.js"></script>
+            <!-- Código del modal -->
+            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h1 class="modal-title fs-5 text-black" id="staticBackdropLabel">Ingresa el nombre de usuario</h1>
+                    </div>
+                    <div>
+                        <form class="form m-5">
+                            <div class="mb-3">
+                                <button type="button" id="botonCerrarModal" class="btn-close " hidden data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                              <label for="imputName" class="form-label text-black">Nombre</label>
+                              <input type="text" class="form-control" id="imputName" aria-describedby="nombreArial">
+                              <div id="nombreArial" class="form-text">Nombre de usuario.</div>
+                            </div>  
+                        </form>
+                        <button id="submitName" class="btn btn-primary" data-bs-dismiss="modal" aria-label="Close">Enviar</button>
+                    </div>
+                    <div class="modal-footer">
+                    </div>
+                  </div>
+                </div>
+              </div>    
         </main>
+        <script src="/bootstrap/js/bootstrap.min.js"></script>
+        <script src="/socket.io/socket.io.min.js"></script>
+        <script src="./app/app.js"></script>
+
     </body>
 </html>
