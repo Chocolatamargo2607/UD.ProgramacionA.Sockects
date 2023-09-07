@@ -13,7 +13,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 //Configución del servidor
 const SERVER = ethernetIP() || ethernet2IP();
-const PORT = 3000;
+const PORT = 8080;
 const app = express();
 const httpSer = http.createServer(app);//Instancia http para socket.io con express
 const io = new WebSocketServer(httpSer);//Instancia de socket.io, con el servidor
